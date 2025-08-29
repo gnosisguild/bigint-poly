@@ -70,10 +70,7 @@ pub fn reduce_and_center_coefficients_mut(coefficients: &mut [BigInt], modulus: 
 /// # Returns
 ///
 /// A new `Vec<BigInt>` with reduced and centered coefficients
-pub fn reduce_and_center_coefficients(
-    coefficients: &[BigInt],
-    modulus: &BigInt,
-) -> Vec<BigInt> {
+pub fn reduce_and_center_coefficients(coefficients: &[BigInt], modulus: &BigInt) -> Vec<BigInt> {
     coefficients
         .iter()
         .map(|x| reduce_and_center(x, modulus, &(modulus / 2)))
@@ -221,7 +218,7 @@ pub fn range_check_centered(vec: &[BigInt], lower_bound: &BigInt, upper_bound: &
 /// In modular arithmetic, negative values are often represented as their positive
 /// equivalents: `-x ≡ modulus - x (mod modulus)`. This function checks both
 /// the direct positive representation and the wrapped negative representation.
-/// 
+///
 /// # Arguments
 ///
 /// * `vec` - A slice of `BigInt` coefficients to check
@@ -258,7 +255,7 @@ pub fn range_check_standard_2bounds(
 /// For a coefficient `c` and bound `b`, this function accepts:
 /// - `c ∈ [0, b]` (small positive values).
 /// - `c ∈ [modulus - b, modulus)` (small negative values as positive representatives).
-/// 
+///
 /// # Arguments
 ///
 /// * `vec` - A slice of `BigInt` coefficients to check

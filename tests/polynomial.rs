@@ -1,4 +1,4 @@
-use bigint_poly::{errors::PolynomialError, Polynomial};
+use bigint_poly::{Polynomial, errors::PolynomialError};
 use num_bigint::BigInt;
 
 #[cfg(test)]

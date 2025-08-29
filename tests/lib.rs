@@ -9,7 +9,10 @@ mod tests {
     fn test_basic_polynomial_creation() {
         let poly = Polynomial::new(vec![BigInt::from(1), BigInt::from(2), BigInt::from(3)]);
         assert_eq!(poly.degree(), 2);
-        assert_eq!(poly.coefficients(), &[BigInt::from(1), BigInt::from(2), BigInt::from(3)]);
+        assert_eq!(
+            poly.coefficients(),
+            &[BigInt::from(1), BigInt::from(2), BigInt::from(3)]
+        );
     }
 
     #[test]

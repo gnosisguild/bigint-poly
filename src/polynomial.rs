@@ -6,6 +6,9 @@ use num_bigint::BigInt;
 use num_traits::{One, Zero};
 use std::fmt;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// A polynomial represented by its coefficients in descending order of degree.
 ///
 /// The coefficients are stored as `BigInt` to support arbitrary precision arithmetic
@@ -27,7 +30,7 @@ impl fmt::Display for Polynomial {
         let mut first = true;
         for (i, coeff) in self.coefficients.iter().enumerate() {
             let degree = self.coefficients.len() - 1 - i;
-            
+
             if coeff.is_zero() {
                 continue;
             }
@@ -48,13 +51,13 @@ impl fmt::Display for Polynomial {
             };
 
             if degree == 0 || !abs_coeff.is_one() {
-                write!(f, "{}", abs_coeff)?;
+                write!(f, "{abs_coeff}")?;
             }
 
             if degree > 0 {
                 write!(f, "x")?;
                 if degree > 1 {
-                    write!(f, "^{}", degree)?;
+                    write!(f, "^{degree}")?;
                 }
             }
         }
@@ -132,14 +135,14 @@ impl Polynomial {
     pub fn leading_coefficient(&self) -> Option<&BigInt> {
         self.coefficients.first()
     }
-    
+
     /// Adds two polynomials together.
     ///
     /// This function performs polynomial addition by:
     /// 1. Finding the maximum length between the two polynomials.
     /// 2. Creating a new polynomial with the maximum length.
     /// 3. Adding the coefficients of both polynomials term by term.
-    /// 
+    ///
     /// # Arguments
     ///
     /// * `other` - A reference to the polynomial to add to `self`.
