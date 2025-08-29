@@ -14,6 +14,7 @@ use serde::{Deserialize, Serialize};
 /// The coefficients are stored as `BigInt` to support arbitrary precision arithmetic
 /// required for cryptographic operations. The polynomial is represented as:
 /// `a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0`
+///
 #[derive(Clone, Debug, PartialEq)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Polynomial {
@@ -78,6 +79,34 @@ impl Polynomial {
     /// * `coefficients` - Vector of coefficients in descending order of degree.
     pub fn new(coefficients: Vec<BigInt>) -> Self {
         Self { coefficients }
+    }
+
+    /// Creates a polynomial from coefficients in ascending order format.
+    ///
+    /// This method converts from ascending order coefficient ordering (lowest degree first)
+    /// to this library's ordering (highest degree first).
+    ///
+    /// # Arguments
+    ///
+    /// * `ascending_coefficients` - Vector of coefficients in ascending order.
+    pub fn from_ascending_coefficients(ascending_coefficients: Vec<BigInt>) -> Self {
+        let mut coefficients = ascending_coefficients;
+        coefficients.reverse();
+        Self { coefficients }
+    }
+
+    /// Converts the polynomial to ascending order coefficient format.
+    ///
+    /// This method converts from this library's ordering (highest degree first)
+    /// to ascending order (lowest degree first).
+    ///
+    /// # Returns
+    ///
+    /// Vector of coefficients in ascending order.
+    pub fn to_ascending_coefficients(&self) -> Vec<BigInt> {
+        let mut coefficients = self.coefficients.clone();
+        coefficients.reverse();
+        coefficients
     }
 
     /// Creates a zero polynomial of specified degree.

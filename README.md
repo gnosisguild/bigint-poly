@@ -27,7 +27,7 @@ Polynomials are represented as:
 a_n * x^n + a_{n-1} * x^{n-1} + ... + a_1 * x + a_0
 ```
 
-Where coefficients are stored in descending order of degree using `BigInt` for arbitrary precision.
+Where coefficients are stored in descending order (highest degree first) of degree using `BigInt` for arbitrary precision. You can rely on some methods to transform to ascending order (lowest degree first) and viceversa.
 
 ### Performance
 
