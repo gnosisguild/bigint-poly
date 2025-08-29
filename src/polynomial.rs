@@ -264,9 +264,9 @@ impl Polynomial {
         }
 
         if divisor.coefficients.is_empty() || divisor.coefficients[0].is_zero() {
-            return Err(PolynomialError::InvalidPolynomial(
-                "Leading coefficient of divisor cannot be zero".to_string(),
-            ));
+            return Err(PolynomialError::InvalidPolynomial {
+                message: "Leading coefficient of divisor cannot be zero".to_string(),
+            });
         }
 
         if self.degree() < divisor.degree() {

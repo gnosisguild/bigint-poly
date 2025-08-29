@@ -1,49 +1,39 @@
 //! Error types for polynomial operations.
 
-use std::fmt;
+use thiserror::Error;
 
 /// Errors that can occur during polynomial operations.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Error)]
 pub enum PolynomialError {
     /// Division by zero polynomial
+    #[error("Division by zero polynomial")]
     DivisionByZero,
+
     /// Invalid polynomial (e.g., empty coefficients or zero leading coefficient)
-    InvalidPolynomial(String),
+    #[error("Invalid polynomial: {message}")]
+    InvalidPolynomial { message: String },
+
     /// Modulus operation error
-    ModulusError(String),
+    #[error("Modulus error: {message}")]
+    ModulusError { message: String },
+
     /// Cyclotomic polynomial error
-    CyclotomicError(String),
+    #[error("Cyclotomic polynomial error: {message}")]
+    CyclotomicError { message: String },
+
     /// Range check failure
-    RangeCheckError(String),
+    #[error("Range check error: {message}")]
+    RangeCheckError { message: String },
+
     /// Arithmetic overflow or underflow
-    ArithmeticError(String),
-}
+    #[error("Arithmetic error: {message}")]
+    ArithmeticError { message: String },
 
-impl fmt::Display for PolynomialError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            PolynomialError::DivisionByZero => write!(f, "Division by zero polynomial"),
-            PolynomialError::InvalidPolynomial(msg) => write!(f, "Invalid polynomial: {msg}"),
-            PolynomialError::ModulusError(msg) => write!(f, "Modulus error: {msg}"),
-            PolynomialError::CyclotomicError(msg) => {
-                write!(f, "Cyclotomic polynomial error: {msg}")
-            }
-            PolynomialError::RangeCheckError(msg) => write!(f, "Range check error: {msg}"),
-            PolynomialError::ArithmeticError(msg) => write!(f, "Arithmetic error: {msg}"),
-        }
-    }
-}
+    /// I/O error
+    #[error("I/O error: {0}")]
+    IoError(#[from] std::io::Error),
 
-impl std::error::Error for PolynomialError {}
-
-impl From<std::io::Error> for PolynomialError {
-    fn from(err: std::io::Error) -> Self {
-        PolynomialError::ArithmeticError(format!("I/O error: {err}"))
-    }
-}
-
-impl From<num_bigint::ParseBigIntError> for PolynomialError {
-    fn from(err: num_bigint::ParseBigIntError) -> Self {
-        PolynomialError::InvalidPolynomial(format!("Parse error: {err}"))
-    }
+    /// Parse error for BigInt
+    #[error("Parse error: {0}")]
+    ParseError(#[from] num_bigint::ParseBigIntError),
 }
