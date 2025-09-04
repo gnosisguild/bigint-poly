@@ -8,7 +8,7 @@
 //! - Uses `num-bigint` for coefficient representation.
 //! - Polynomial Modular Arithmetic: Addition, subtraction, multiplication, division reduction modulo cyclotomic polynomials and prime moduli.
 //! - Range Checking: Utilities for coefficient range validation.
-//! - Serialization: Optional serde support for polynomial serialization.
+//! - Serialization: Optional serde support for polynomial serialization with bincode integration.
 //!
 //! ## Mathematical Background
 //!
